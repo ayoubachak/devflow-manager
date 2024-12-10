@@ -11,17 +11,18 @@
         <form th:action="@{'/evaluations/edit/' + ${evaluation.id}}" th:object="${evaluation}" method="post">
             <div class="mb-4">
                 <label class="block text-gray-700">Developer</label>
-                <select th:field="*{developer}" class="w-full px-3 py-2 border rounded" required>
-                    <option value="" disabled>Select Developer</option>
-                    <option th:each="dev : ${developers}" th:value="${dev}" th:selected="${dev.id == evaluation.developer.id}" th:text="${dev.name}">Developer Name</option>
+                <select th:field="*{developer.id}" class="w-full px-3 py-2 border rounded" required>
+                    <option value="" disabled selected>Select Developer</option>
+                    <option th:each="dev : ${developers}" th:value="${dev.id}" th:text="${dev.name}">Developer Name</option>
                 </select>
                 <p th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}" class="text-red-500 text-sm"></p>
             </div>
+            
             <div class="mb-4">
                 <label class="block text-gray-700">Project</label>
-                <select th:field="*{project}" class="w-full px-3 py-2 border rounded" required>
-                    <option value="" disabled>Select Project</option>
-                    <option th:each="proj : ${projects}" th:value="${proj}" th:selected="${proj.id == evaluation.project.id}" th:text="${proj.title}">Project Title</option>
+                <select th:field="*{project.id}" class="w-full px-3 py-2 border rounded" required>
+                    <option value="" disabled selected>Select Project</option>
+                    <option th:each="proj : ${projects}" th:value="${proj.id}" th:text="${proj.title}">Project Title</option>
                 </select>
                 <p th:if="${#fields.hasErrors('project')}" th:errors="*{project}" class="text-red-500 text-sm"></p>
             </div>
