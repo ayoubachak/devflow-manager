@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <title>Projects</title>
 </head>
 <body>
-    <div class="flex justify-between mb-4">
-        <h1 class="text-2xl font-bold">Projects</h1>
-        <a th:href="@{/projects/add}" class="bg-blue-500 text-white px-4 py-2 rounded">Add Project</a>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Projects</h2>
+        <a th:href="@{/projects/add}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Project</a>
     </div>
-    <table class="min-w-full bg-white">
-        <thead>
-            <tr>
-                <th class="py-2">ID</th>
-                <th class="py-2">Title</th>
-                <th class="py-2">Description</th>
-                <th class="py-2">Duration</th>
-                <th class="py-2">Required Skills</th>
-                <th class="py-2">Assigned Developers</th>
-                <th class="py-2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="project : ${projects}">
-                <td class="border px-4 py-2" th:text="${project.id}"></td>
-                <td class="border px-4 py-2" th:text="${project.title}"></td>
-                <td class="border px-4 py-2" th:text="${project.description}"></td>
-                <td class="border px-4 py-2" th:text="${project.duration}"></td>
-                <td class="border px-4 py-2" th:text="${project.requiredSkills}"></td>
-                <td class="border px-4 py-2">
-                    <ul>
-                        <li th:each="dev : ${project.assignedDevelopers}" th:text="${dev.name}"></li>
-                    </ul>
-                </td>
-                <td class="border px-4 py-2">
-                    <a th:href="@{/projects/edit/{id}(id=${project.id})}" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Edit</a>
-                    <a th:href="@{/projects/delete/{id}(id=${project.id})}" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Title</th>
+                    <th class="py-2 px-4 border-b">Description</th>
+                    <th class="py-2 px-4 border-b">Duration</th>
+                    <th class="py-2 px-4 border-b">Required Skills</th>
+                    <th class="py-2 px-4 border-b">Assigned Developers</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projects}">
+                    <td class="py-2 px-4 border-b" th:text="${project.id}">1</td>
+                    <td class="py-2 px-4 border-b" th:text="${project.title}">Project A</td>
+                    <td class="py-2 px-4 border-b" th:text="${project.description}">Description here</td>
+                    <td class="py-2 px-4 border-b" th:text="${project.duration}">3 months</td>
+                    <td class="py-2 px-4 border-b" th:text="${project.requiredSkillsString}">Java, Spring</td>
+                    <td class="py-2 px-4 border-b">
+                        <ul>
+                            <li th:each="dev : ${project.assignedDevelopers}" th:text="${dev.name}">Developer Name</li>
+                        </ul>
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <a th:href="@{'/projects/edit/' + ${project.id}}" class="text-blue-500 hover:underline">Edit</a> |
+                        <a th:href="@{'/projects/delete/' + ${project.id}}" 
+                           class="text-red-500 hover:underline" 
+                           onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
+                    </td>
+                </tr>
+                <tr th:if="${projects.empty}">
+                    <td colspan="7" class="text-center py-4">No projects found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

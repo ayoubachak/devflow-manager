@@ -1,52 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <title>Edit Project</title>
 </head>
 <body>
-    <h2 class="text-2xl font-bold mb-4">Edit Project</h2>
-    <form th:action="@{/projects/edit/{id}(id=${project.id})}" th:object="${project}" method="post">
-        <div class="mb-4">
-            <label class="block text-gray-700">Title</label>
-            <input type="text" th:field="*{title}" class="w-full px-3 py-2 border rounded" required>
-            <div th:if="${#fields.hasErrors('title')}" class="text-red-500 text-sm">
-                <p th:errors="*{title}">Title Error</p>
+    <div class="max-w-lg mx-auto bg-white p-8 rounded shadow">
+        <h2 class="text-2xl font-bold mb-6">Edit Project</h2>
+        <form th:action="@{'/projects/edit/' + ${project.id}}" th:object="${project}" method="post">
+            <div class="mb-4">
+                <label class="block text-gray-700">Title</label>
+                <input type="text" th:field="*{title}" class="w-full px-3 py-2 border rounded" required />
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Description</label>
-            <textarea th:field="*{description}" class="w-full px-3 py-2 border rounded" required></textarea>
-            <div th:if="${#fields.hasErrors('description')}" class="text-red-500 text-sm">
-                <p th:errors="*{description}">Description Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Description</label>
+                <textarea th:field="*{description}" class="w-full px-3 py-2 border rounded" rows="4" required></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Duration</label>
-            <input type="text" th:field="*{duration}" class="w-full px-3 py-2 border rounded" required>
-            <div th:if="${#fields.hasErrors('duration')}" class="text-red-500 text-sm">
-                <p th:errors="*{duration}">Duration Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Duration</label>
+                <input type="text" th:field="*{duration}" class="w-full px-3 py-2 border rounded" placeholder="e.g., 3 months" required />
+                <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Required Skills (comma separated)</label>
-            <input type="text" th:field="*{requiredSkillsString}" class="w-full px-3 py-2 border rounded" required>
-            <div th:if="${#fields.hasErrors('requiredSkills')}" class="text-red-500 text-sm">
-                <p th:errors="*{requiredSkills}">Required Skills Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Required Skills (comma-separated)</label>
+                <input type="text" th:field="*{requiredSkillsString}" class="w-full px-3 py-2 border rounded" />
+                <p th:if="${#fields.hasErrors('requiredSkillsString')}" th:errors="*{requiredSkillsString}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Assign Developers</label>
-            <select th:field="*{assignedDevelopers}" multiple class="w-full px-3 py-2 border rounded">
-                <option th:each="developer : ${developers}" th:value="${developer}" th:text="${developer.name}" 
-                        th:selected="${project.assignedDevelopers.contains(developer)}"></option>
-            </select>
-            <div th:if="${#fields.hasErrors('assignedDevelopers')}" class="text-red-500 text-sm">
-                <p th:errors="*{assignedDevelopers}">Assigned Developers Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Assign Developers</label>
+                <select th:field="*{assignedDevelopers}" multiple class="w-full px-3 py-2 border rounded">
+                    <option th:each="dev : ${developers}" th:value="${dev}" th:selected="${project.assignedDevelopers.contains(dev)}" th:text="${dev.name}">Developer Name</option>
+                </select>
+                <p th:if="${#fields.hasErrors('assignedDevelopers')}" th:errors="*{assignedDevelopers}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Project</button>
-        </div>
-    </form>
+            <div class="mb-4">
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Update Project</button>
+            </div>
+            <div class="text-center">
+                <a th:href="@{/projects}" class="text-blue-500 hover:underline">Back to Projects</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

@@ -1,45 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <title>Register</title>
 </head>
 <body>
-    <div class="max-w-md mx-auto bg-white p-8 mt-10 rounded shadow">
-        <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
-        <form th:action="@{/register}" th:object="${developer}" method="post">
-            <div class="mb-4">
-                <label class="block text-gray-700">Name</label>
-                <input type="text" th:field="*{name}" class="w-full px-3 py-2 border rounded" required>
-                <div th:if="${#fields.hasErrors('name')}" class="text-red-500 text-sm">
-                    <p th:errors="*{name}">Name Error</p>
+    <div layout:fragment="content">
+        <div class="max-w-md mx-auto bg-white p-8 rounded shadow">
+            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <form th:action="@{/register}" th:object="${developer}" method="post">
+                <div class="mb-4">
+                    <label class="block text-gray-700">Name</label>
+                    <input type="text" th:field="*{name}" class="w-full px-3 py-2 border rounded" required />
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-sm"></p>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Login</label>
-                <input type="text" th:field="*{login}" class="w-full px-3 py-2 border rounded" required>
-                <div th:if="${#fields.hasErrors('login')}" class="text-red-500 text-sm">
-                    <p th:errors="*{login}">Login Error</p>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Login</label>
+                    <input type="text" th:field="*{login}" class="w-full px-3 py-2 border rounded" required />
+                    <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="text-red-500 text-sm"></p>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Password</label>
-                <input type="password" th:field="*{password}" class="w-full px-3 py-2 border rounded" required>
-                <div th:if="${#fields.hasErrors('password')}" class="text-red-500 text-sm">
-                    <p th:errors="*{password}">Password Error</p>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Password</label>
+                    <input type="password" th:field="*{password}" class="w-full px-3 py-2 border rounded" required />
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-sm"></p>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">Skills (comma separated)</label>
-                <input type="text" th:field="*{skillsString}" class="w-full px-3 py-2 border rounded" required>
-                <div th:if="${#fields.hasErrors('skills')}" class="text-red-500 text-sm">
-                    <p th:errors="*{skills}">Skills Error</p>
+                <div class="mb-4">
+                    <label class="block text-gray-700">Skills (comma-separated)</label>
+                    <input type="text" th:field="*{skillsString}" class="w-full px-3 py-2 border rounded" />
+                    <p th:if="${#fields.hasErrors('skillsString')}" th:errors="*{skillsString}" class="text-red-500 text-sm"></p>
                 </div>
-            </div>
-            <div>
-                <button type="submit" class="w-full bg-green-500 text-white py-2 rounded">Register</button>
-            </div>
-        </form>
-        <p class="mt-4 text-center">Already have an account? <a th:href="@{/login}" class="text-blue-500">Login here</a>.</p>
+                <div class="mb-4">
+                    <button type="submit" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Register</button>
+                </div>
+                <div class="text-center">
+                    <a th:href="@{/login}" class="text-blue-500 hover:underline">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

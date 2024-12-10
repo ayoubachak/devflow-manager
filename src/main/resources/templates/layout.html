@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Base Layout</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-4">
+                    <a th:href="@{/}" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+                        <span class="font-bold">MyApp</span>
+                    </a>
+                    <a th:href="@{/developers}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Developers</a>
+                    <a th:href="@{/projects}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Projects</a>
+                    <a th:href="@{/evaluations}" class="py-5 px-3 text-gray-700 hover:text-gray-900">Evaluations</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div th:if="${#request.remoteUser}">
+                        <span class="text-gray-700">Hello, <span th:text="${#request.remoteUser}">User</span>!</span>
+                        <a th:href="@{/logout}" class="py-2 px-3 bg-red-500 text-white rounded hover:bg-red-600">Logout</a>
+                    </div>
+                    <div th:if="${#request.remoteUser == null}">
+                        <a th:href="@{/login}" class="py-2 px-3 bg-blue-500 text-white rounded hover:bg-blue-600">Login</a>
+                        <a th:href="@{/register}" class="py-2 px-3 bg-green-500 text-white rounded hover:bg-green-600">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div layout:fragment="content">
+            <!-- Default content can go here if needed -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-gray-600">
+            &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2024</span> MyApp. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

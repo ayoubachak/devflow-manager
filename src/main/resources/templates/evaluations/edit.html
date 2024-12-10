@@ -1,48 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <title>Edit Evaluation</title>
 </head>
 <body>
-    <h2 class="text-2xl font-bold mb-4">Edit Evaluation</h2>
-    <form th:action="@{/evaluations/edit/{id}(id=${evaluation.id})}" th:object="${evaluation}" method="post">
-        <div class="mb-4">
-            <label class="block text-gray-700">Developer</label>
-            <select th:field="*{developer}" class="w-full px-3 py-2 border rounded" required>
-                <option value="" disabled>Select Developer</option>
-                <option th:each="developer : ${developers}" th:value="${developer}" th:text="${developer.name}" th:selected="${developer == evaluation.developer}"></option>
-            </select>
-            <div th:if="${#fields.hasErrors('developer')}" class="text-red-500 text-sm">
-                <p th:errors="*{developer}">Developer Error</p>
+    <div class="max-w-lg mx-auto bg-white p-8 rounded shadow">
+        <h2 class="text-2xl font-bold mb-6">Edit Evaluation</h2>
+        <form th:action="@{'/evaluations/edit/' + ${evaluation.id}}" th:object="${evaluation}" method="post">
+            <div class="mb-4">
+                <label class="block text-gray-700">Developer</label>
+                <select th:field="*{developer}" class="w-full px-3 py-2 border rounded" required>
+                    <option value="" disabled>Select Developer</option>
+                    <option th:each="dev : ${developers}" th:value="${dev}" th:selected="${dev.id == evaluation.developer.id}" th:text="${dev.name}">Developer Name</option>
+                </select>
+                <p th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Project</label>
-            <select th:field="*{project}" class="w-full px-3 py-2 border rounded" required>
-                <option value="" disabled>Select Project</option>
-                <option th:each="project : ${projects}" th:value="${project}" th:text="${project.title}" th:selected="${project == evaluation.project}"></option>
-            </select>
-            <div th:if="${#fields.hasErrors('project')}" class="text-red-500 text-sm">
-                <p th:errors="*{project}">Project Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Project</label>
+                <select th:field="*{project}" class="w-full px-3 py-2 border rounded" required>
+                    <option value="" disabled>Select Project</option>
+                    <option th:each="proj : ${projects}" th:value="${proj}" th:selected="${proj.id == evaluation.project.id}" th:text="${proj.title}">Project Title</option>
+                </select>
+                <p th:if="${#fields.hasErrors('project')}" th:errors="*{project}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Rating (1-5)</label>
-            <input type="number" th:field="*{rating}" min="1" max="5" class="w-full px-3 py-2 border rounded" required>
-            <div th:if="${#fields.hasErrors('rating')}" class="text-red-500 text-sm">
-                <p th:errors="*{rating}">Rating Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Rating</label>
+                <input type="number" th:field="*{rating}" min="1" max="5" class="w-full px-3 py-2 border rounded" required />
+                <p th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700">Feedback</label>
-            <textarea th:field="*{feedback}" class="w-full px-3 py-2 border rounded" required></textarea>
-            <div th:if="${#fields.hasErrors('feedback')}" class="text-red-500 text-sm">
-                <p th:errors="*{feedback}">Feedback Error</p>
+            <div class="mb-4">
+                <label class="block text-gray-700">Feedback</label>
+                <textarea th:field="*{feedback}" class="w-full px-3 py-2 border rounded" rows="4" required></textarea>
+                <p th:if="${#fields.hasErrors('feedback')}" th:errors="*{feedback}" class="text-red-500 text-sm"></p>
             </div>
-        </div>
-        <div>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Evaluation</button>
-        </div>
-    </form>
+            <div class="mb-4">
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Update Evaluation</button>
+            </div>
+            <div class="text-center">
+                <a th:href="@{/evaluations}" class="text-blue-500 hover:underline">Back to Evaluations</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
