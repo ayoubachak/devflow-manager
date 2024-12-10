@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout">
+<head>
+    <title>Edit Developer</title>
+</head>
+<body>
+    <h2 class="text-2xl font-bold mb-4">Edit Developer</h2>
+    <form th:action="@{/developers/edit/{id}(id=${developer.id})}" th:object="${developer}" method="post">
+        <div class="mb-4">
+            <label class="block text-gray-700">Name</label>
+            <input type="text" th:field="*{name}" class="w-full px-3 py-2 border rounded" required>
+            <div th:if="${#fields.hasErrors('name')}" class="text-red-500 text-sm">
+                <p th:errors="*{name}">Name Error</p>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700">Login</label>
+            <input type="text" th:field="*{login}" class="w-full px-3 py-2 border rounded" required>
+            <div th:if="${#fields.hasErrors('login')}" class="text-red-500 text-sm">
+                <p th:errors="*{login}">Login Error</p>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700">Password</label>
+            <input type="password" th:field="*{password}" class="w-full px-3 py-2 border rounded" required>
+            <div th:if="${#fields.hasErrors('password')}" class="text-red-500 text-sm">
+                <p th:errors="*{password}">Password Error</p>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700">Skills (comma separated)</label>
+            <input type="text" th:field="*{skillsString}" class="w-full px-3 py-2 border rounded" required>
+            <div th:if="${#fields.hasErrors('skills')}" class="text-red-500 text-sm">
+                <p th:errors="*{skills}">Skills Error</p>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Developer</button>
+        </div>
+    </form>
+</body>
+</html>
